@@ -1,0 +1,15 @@
+package model.domain;
+
+import java.time.LocalDate;
+
+public class Pedido {
+
+    private LocalDate fecha;
+    private String estado;
+
+    public Pedido(String estado){
+        this.fecha = LocalDate.now();
+        this.estado = estado;
+    }
+
+}
