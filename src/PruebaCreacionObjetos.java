@@ -13,8 +13,39 @@ public class PruebaCreacionObjetos {
         registrarProducto();
         registrarProducto();
         revisarProductos();
+        iniciarVenta();
+        revisarProductos();
     }
       
+
+    private void iniciarVenta(){
+        String prodnom;
+        Producto p;
+        int cantidadP;
+        System.out.println("Ingrese el producto a buscar");
+        prodnom = sc.nextLine();
+        sc.nextLine();
+        System.out.println("Ingrese la cantidad de ese producto");
+        cantidadP = sc.nextInt();
+        p = buscarProducto(prodnom);
+        if (p != null) {
+            Venta v = new Venta();
+            v.encargarItem(p, cantidadP);
+        }
+    }
+
+
+    private Producto buscarProducto(String nombre) {
+        for (Object[] fila : matrizStock) {
+            Producto p = (Producto) fila[0];
+            if (p.getNombre().equals(nombre)) {
+                return p;
+            }
+        }
+        System.out.println("Producto no encontrado en el stock");
+        return null;
+    }
+
     private void registrarProducto(){
         int type = 0;
         String cod,nom,niv;

@@ -4,10 +4,19 @@ public class ItemVenta {
     private int cantidad;
     private Producto productoAVender;
 
-    public ItemVenta(int Qu, Producto p_vA){
+    public ItemVenta(Producto p_vA, int Qu){
+        System.out.println(p_vA.getNombre());
+
+        if (p_vA != null) {
+            this.productoAVender = p_vA;  
+        } else {
+            throw new IllegalStateException("Producto no existe");
+        }
         this.cantidad = Qu;
-        this.productoAVender = p_vA;    
     }
 
+    public void doItemVenta(){
+        productoAVender.vender(cantidad);
+    }
 
 }
