@@ -9,14 +9,26 @@ public class ProductoOficina extends Producto {
         this.categoria = categoria;
     }
     
+    @Override 
     public double calcularPrecioFinal(){
-        double precioFinal =1;
-        return precioFinal;
+        double precio = (super.getPrecio() * 1.08);
+        return precio;
     }
+    
+    @Override 
     public void vender(int cantidad) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int cantidadStock = getStock();
+        if (cantidad > 0) {
+            if (cantidad > cantidadStock) {
+                super.setStock((cantidadStock - cantidad));
+            } else {
+                throw new IllegalStateException("Stock insuficiente");
+            }
+        }
+
     }
- 
+
+    
     public String getCategoria() {return categoria;}
     public void setCategoria(String categoria) {this.categoria = categoria;}
 

@@ -9,17 +9,29 @@ public abstract class Producto implements Vendible{
     public Producto(String codigo, String nombre, double precio, int cantidadStock) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.precio = precio;
-        this.cantidadStock = cantidadStock;
+        
+        if (precio > 0) {
+            this.precio = precio;
+        } else {
+            throw new IllegalArgumentException("Precio no vàlido");
+        }
+
+        if (cantidadStock >= 0) {
+            this.cantidadStock = cantidadStock;        
+        } else {            
+            throw new IllegalArgumentException("Stock no valido");
+        }
+
     }
 
+    @Override 
     public abstract void vender(int cantidad);
-
-    public abstract double calcularPrecioFinal();
 
     public String getCodigo() {return codigo;}
     public String getNombre() {return nombre;}
     public double getPrecio() {return precio;}
     public int getStock() {return cantidadStock;}
+
+    public void setStock(int stockActual){this.cantidadStock = stockActual;}
 
 }

@@ -8,13 +8,31 @@ public class ProductoEscolar extends Producto {
         super(codigo, nombre, precio, cantidadStock);
         this.nivelEscolar = nivelEscolar;
     }
+
+    @Override 
     public double calcularPrecioFinal(){
-        double precioFinal =1;
-        return precioFinal;
+        double precio = super.getPrecio();
+
+        if (nivelEscolar.equals("primaria")) {
+            precio = precio*0.90;
+            return precio;
+        }
+        return precio;
     }
+
+    @Override 
     public void vender(int cantidad) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
+        int cantidadStock = getStock();
+        if (cantidad > 0) {
+            if ((cantidadStock - cantidad) > 0) {
+                super.setStock((cantidadStock - cantidad));
+            } else {
+                throw new IllegalStateException("Stock insuficiente");
+            }
+        }
+
     }
  
-    public String getCategoria() {return nivelEscolar;}
+    public String getNivelEscolar() {return nivelEscolar;}
 }
