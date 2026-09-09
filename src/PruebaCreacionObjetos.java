@@ -17,7 +17,7 @@ public class PruebaCreacionObjetos {
     }
 
     private void mostrarMenu(){
-        int Opcion;
+        int Opcion = 0;
         do { 
             String hub = " Menu Principal "+
                          "\n 1. Registrar Producto"+
@@ -38,6 +38,7 @@ public class PruebaCreacionObjetos {
                     break;
                 case 3:
                     iniciarVenta();
+                    break;
                 case 4:
                     adminProveedor();
                     break;
@@ -51,7 +52,7 @@ public class PruebaCreacionObjetos {
     }
 
     private void adminProveedor(){
-        int type;
+        int type = 0;
         String nombreProveedor,celularProveedor,categoriaProveedor;
         System.out.println("Ingrese el tipo opcion a realizar"+
                             "\n[1] Registrar Proveedor [2] Actualizar Telefono [3] Ver Proveedores [4] Salir");
@@ -176,7 +177,6 @@ public class PruebaCreacionObjetos {
                 break;
             default:
                 System.out.println("Opcion invalida");
-                return;
         }
     }
 
