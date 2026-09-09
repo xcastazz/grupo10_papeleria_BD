@@ -19,7 +19,7 @@ public class ProductoOficina extends Producto {
     public void vender(int cantidad) {
         int cantidadStock = getStock();
         if (cantidad > 0) {
-            if (cantidad > cantidadStock) {
+            if ((cantidadStock - cantidad) > 0) {
                 super.setStock((cantidadStock - cantidad));
             } else {
                 throw new IllegalStateException("Stock insuficiente");
