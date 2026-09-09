@@ -8,6 +8,4 @@
 
 - Jeronimos Castañeda
 
-- Cristian Ruia
-
 - Thomas Galeano
