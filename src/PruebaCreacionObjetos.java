@@ -5,18 +5,94 @@ import model.domain.*;
 public class PruebaCreacionObjetos {
     
     private ArrayList<Object[]> matrizStock;
+    private ArrayList<Object[]> matrizProveedor;
     private static Scanner sc = new Scanner(System.in);
 
+    //{O|O|O|O|O|O|O|O|O||}
 
     public PruebaCreacionObjetos() {
         this.matrizStock = new ArrayList<>();
-        registrarProducto();
-        registrarProducto();
-        revisarProductos();
-        iniciarVenta();
-        revisarProductos();
+        this.matrizProveedor = new ArrayList<>();
+        mostrarMenu();
     }
-      
+
+    private void mostrarMenu(){
+        int Opcion;
+        do { 
+            String hub = " Menu Principal "+
+                         "\n 1. Registrar Producto"+
+                         "\n 2. Revisar Productos"+
+                         "\n 3. Iniciar Venta"+
+                         "\n 4. Administras Proveedores."+
+                         "\n 5. Salir.";
+            System.out.println(hub);
+            Opcion = sc.nextInt();
+            sc.nextLine();
+
+            switch (Opcion) {
+                case 1:
+                    registrarProducto();
+                    break;
+                case 2:
+                    revisarProductos();
+                    break;
+                case 3:
+                    iniciarVenta();
+                case 4:
+                    adminProveedor();
+                    break;
+                case 5:
+                    System.out.println("Saliendo");
+                    break;
+                default:
+                    System.out.println("Intente nuevamente opcion no valida");
+            }
+        } while (Opcion != 5);
+    }
+
+    private void adminProveedor(){
+        int type;
+        String nombreProveedor,celularProveedor,categoriaProveedor;
+        System.out.println("Ingrese el tipo opcion a realizar"+
+                            "\n[1] Registrar Proveedor [2] Actualizar Telefono [3] Ver Proveedores [4] Salir");
+        type = sc.nextInt();
+        sc.nextLine();
+        switch (type) {
+            case 1:
+                System.out.println("Ingrese el nombre del proveedor");
+                nombreProveedor = sc.nextLine();
+                System.out.println("Ingrese el Telefono Celular del Proveedor");
+                celularProveedor = sc.nextLine();
+                System.out.println("Ingrese la categoría de productos del proveedor");
+                categoriaProveedor = sc.nextLine();
+                Proveedor Nuevo = new Proveedor(nombreProveedor, celularProveedor, categoriaProveedor);
+                Nuevo.registrarPedido("Recien Creado, pedido de prueba"); // pedido de prueba
+                Object[] Proveedor = new  Object[]{Nuevo};
+                matrizProveedor.add(Proveedor);
+                break;
+            case 2:
+                System.out.println("Ingrese el nombre del proveedor a realizar la actualizacion");
+                nombreProveedor = sc.nextLine();
+                System.out.println("Ingrese el Telefono Celular del Proveedor a actualizar");
+                celularProveedor = sc.nextLine();
+                Proveedor reemplazo = buscarProveedor(nombreProveedor);
+                reemplazo.actualizarTelefono(celularProveedor);
+                System.out.println("Telefono actualizado a "+reemplazo.getProveedorTelefono()+" Para Proveedor"+ reemplazo.getProveedorNombre());
+                break;
+            case 3:
+                revisarProveedores();
+                break;
+            case 4:
+                System.out.println("Volviendo al menù");
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+    }
+
+
+          
 
     private void iniciarVenta(){
         String prodnom;
@@ -46,13 +122,26 @@ public class PruebaCreacionObjetos {
         return null;
     }
 
+    private Proveedor buscarProveedor(String nombre) {
+        for (Object[] Proveedor : matrizProveedor) {
+            Proveedor p = (Proveedor) Proveedor[0];
+            if (p.getProveedorNombre().equals(nombre)) {
+                return p;
+            }
+        }
+        System.out.println("Proveedor no encontrado");
+        return null;
+    }
+
+
     private void registrarProducto(){
         int type = 0;
         String cod,nom,niv;
         double precio;
         int cantidadStock;
 
-        System.out.println("Ingrese el tipo de producto que desea registrar");
+        System.out.println("Ingrese el tipo de producto que desea registrar"+
+                            "\n[1] Producto Escolar [2] Producto Oficina");
         type = sc.nextInt();
         sc.nextLine();
         switch (type) {
@@ -131,6 +220,22 @@ public class PruebaCreacionObjetos {
         System.out.println("Nombre : " + p.getNombre());
         System.out.println("Precio : " + p.getPrecio());
         System.out.println("Stock : " + p.getStock());
+        System.out.println("---------------------------");
+    }
+}
+
+    private void revisarProveedores() {
+        if (matrizProveedor.isEmpty()) {
+            System.out.println("No hay proveedores registrados");
+            return;
+        }
+
+        System.out.println("===     Contactos      ===");
+        for (Object[] Proveedor : matrizProveedor) {
+            Proveedor p = (Proveedor) Proveedor[0];
+        System.out.println("Nombre : " + p.getProveedorNombre());
+        System.out.println("Celular : " + p.getProveedorTelefono());
+        System.out.println("Categoria : " + p.getCategoria());
         System.out.println("---------------------------");
     }
 }

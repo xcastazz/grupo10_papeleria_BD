@@ -13,7 +13,6 @@ public class Venta {
     }
     
     public void encargarItem(Producto encargo, int cantidad){
-
         ItemVenta nuevaVenta = new ItemVenta(encargo, cantidad);
         System.out.println("Se registra un nuevo producto para la venta: "+encargo+" encargados: "+ cantidad);
         agregarItem(nuevaVenta);

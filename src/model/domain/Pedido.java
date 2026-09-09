@@ -8,9 +8,12 @@ public class Pedido {
     private String estado;
     private Proveedor proveedor;
     
-    public Pedido(String estado){
+    public Pedido(Proveedor proveedor, String estado){
+        this.proveedor = proveedor;
         this.fecha = LocalDate.now();
         this.estado = estado;
+        System.out.println("Se creó pedido en la fecha "+ fecha+ "A nombre de "+ proveedor.getProveedorNombre() +
+                            "\nCon numero de celular: "+ proveedor.getProveedorTelefono()+" con el estado"+ estado);
     }
 
 }
