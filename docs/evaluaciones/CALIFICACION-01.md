@@ -56,3 +56,47 @@ Sí compila. Funciona si alguien escribe los datos a mano, pero se detiene con u
 - Escriban la prueba creando los objetos directamente en el código y llamen a `calcularPrecioFinal()` en cada tipo de producto.
 - Completen getters, setters y validaciones en `Pedido` e `ItemVenta`.
 - Repartan los commits entre todos los integrantes.
+
+---
+
+## Plan de mejora organizado (acción directa)
+
+### Prioridad 1 — Corregir lógica y estructura UML
+Objetivo: que el código respete el diseño y no falle en casos de stock.
+
+- En `Producto`, dejar `vender()` implementado una sola vez (comportamiento común).
+- En `ProductoOficina` y `ProductoEscolar`, mantener la especialización en `calcularPrecioFinal()`.
+- Corregir validación de stock en `ProductoOficina` (hoy está invertida).
+- Permitir en `ProductoEscolar` vender exactamente todo el stock (caso límite `== stock`).
+
+### Prioridad 2 — Ajustar la prueba de creación de objetos
+Objetivo: que la prueba ejecute sin entrada manual y demuestre polimorfismo.
+
+- Quitar dependencia de `Scanner` en `PruebaCreacionObjetos`.
+- Crear objetos directamente en código con constructores (`new Producto...`).
+- Llamar explícitamente `calcularPrecioFinal()` para ambos tipos de producto.
+- Eliminar el `nextLine()` sobrante.
+
+### Prioridad 3 — Completar encapsulamiento faltante
+Objetivo: cumplir UML y facilitar uso correcto de clases.
+
+- `Pedido`: agregar getters/setters faltantes y forma de asignar su `Proveedor`.
+- `ItemVenta`: agregar getters de cantidad y producto.
+- Quitar impresiones en consola desde constructor de `ItemVenta`.
+
+### Prioridad 4 — Mejora de calidad del código y trabajo en equipo
+Objetivo: mejorar mantenibilidad y evidencia de colaboración.
+
+- Renombrar variables poco descriptivas (`p_vA`, `Qu`, `nn`, `ph`, `cP`).
+- Repartir commits entre integrantes (evitar autor único en la entrega).
+
+## Checklist de cierre (antes de entregar)
+
+1. `vender()` existe una sola vez en `Producto`.
+2. Casos límite de stock probados (`<`, `==`, `>`).
+3. Prueba corre sin `Scanner`.
+4. `calcularPrecioFinal()` invocado en producto escolar y de oficina.
+5. `Pedido` e `ItemVenta` con getters/setters requeridos.
+6. Sin `System.out.println` en constructores.
+7. Variables con nombres claros.
+8. Commits distribuidos entre todos los integrantes.
