@@ -12,6 +12,8 @@ public class ProductoEscolar extends Producto {
     @Override 
     public double calcularPrecioFinal(){
         double precio = super.getPrecio();
+        
+        
 
         if (nivelEscolar.equals("primaria")) {
             precio = precio*0.90;
@@ -24,8 +26,10 @@ public class ProductoEscolar extends Producto {
     public void vender(int cantidad) {
         
         int cantidadStock = getStock();
-        if (cantidad > 0) {
+        if (cantidad >= 0) {
+            System.out.println(cantidad+" encargados");
             if ((cantidadStock - cantidad) > 0) {
+                double precio = calcularPrecioFinal() * cantidad;
                 super.setStock((cantidadStock - cantidad));
             } else {
                 throw new IllegalStateException("Stock insuficiente");
