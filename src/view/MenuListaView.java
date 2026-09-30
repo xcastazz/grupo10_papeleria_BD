@@ -22,12 +22,11 @@ public class MenuListaView {
             switch (opcion) {
                 case 1 -> menuAOpciones();
                 case 2 -> menuBOpciones();
-                case 0 -> System.out.println("Saliendo del sistema...");
+                case 3 -> System.out.println("Saliendo del sistema...");
                 default -> System.out.println("Opcion invalida.");
             }
-        } while (opcion != 0);
+        } while (opcion != 3);
 
-        ConsoleUtils.cerrar();
     }
 
     private void menuAOpciones(){
@@ -46,8 +45,6 @@ public class MenuListaView {
                 default -> System.out.println("Opcion invalida.");
             }
         } while (opcion != 0);
-
-        ConsoleUtils.cerrar();
     }
 
     private void menuBOpciones(){
@@ -67,8 +64,6 @@ public class MenuListaView {
                 default -> System.out.println("Opcion invalida.");
             }
         } while (opcion != 0);
-
-        ConsoleUtils.cerrar();
     }
 
 
@@ -94,6 +89,7 @@ public class MenuListaView {
         System.out.println("4. Actualizar Producto por Codigo");
         System.out.println("5. Eliminar Producto por Codigo");
         System.out.println("6. Listar Productos");
+        System.out.println("7. Vender producto");
         System.out.println("0. Salir");
     }
 
