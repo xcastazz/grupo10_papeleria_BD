@@ -4,19 +4,19 @@ public class ItemVenta {
     private int cantidad;
     private Producto productoAVender;
 
-    public ItemVenta(Producto p_vA, int Qu){
-        System.out.println(p_vA.getNombre());
-
-        if (p_vA != null) {
-            this.productoAVender = p_vA;  
+    public ItemVenta(Producto productoAVender, int Cantidad){
+        if (productoAVender != null) {
+            this.productoAVender = productoAVender;  
         } else {
             throw new IllegalStateException("Producto no existe");
         }
-        this.cantidad = Qu;
+        this.cantidad = Cantidad;
     }
 
     public void doItemVenta(){
         productoAVender.vender(cantidad);
+        System.out.println(productoAVender.getNombre());
+        System.out.println("Precio total de la venta; "+productoAVender.calcularPrecioFinal()*cantidad);
     }
 
 }

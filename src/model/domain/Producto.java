@@ -33,5 +33,8 @@ public abstract class Producto implements Vendible{
     public int getStock() {return cantidadStock;}
 
     public void setStock(int stockActual){this.cantidadStock = stockActual;}
+    public void setNombre(String nombre){this.nombre = nombre;}
+    public void setPrecio(double precioNuevo){this.precio = precioNuevo;}
+
 
 }

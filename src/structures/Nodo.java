@@ -2,10 +2,9 @@ package structures;
 
 public class Nodo<T> {
     private T dato;
-    private Nodo siguiente; // un nodo tiene un dato y un apuntador, almacena un objetos, cuando tiene <T> indica que es un atributo que tiene cualquier tipo de objeto
-    //Atributo siguiente hace referencia a un apuntador referente a otro nodo, el tipo de dato tiene que ser Nodo, dos atributos basicos de un Nodo
+    private Nodo<T> siguiente;
 
-    public Nodo(T dato){
+    public Nodo(T dato) {
         this.dato = dato;
         this.siguiente = null;
     }
@@ -18,14 +17,11 @@ public class Nodo<T> {
         this.dato = dato;
     }
 
-    public Nodo getSiguiente() {
+    public Nodo<T> getSiguiente() {
         return siguiente;
     }
 
-    public void setSiguiente(Nodo siguiente) {
+    public void setSiguiente(Nodo<T> siguiente) {
         this.siguiente = siguiente;
     }
-
-    
-
 }
