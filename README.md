@@ -9,3 +9,6 @@
 - Jeronimos Castañeda
 
 - Thomas Galeano
+
+
+# Edit se me olvido hacer el commit de todo anoche :sob:  
