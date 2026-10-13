@@ -1,19 +1,19 @@
 package model.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import structures.ListaSimple;
 
 public class Proveedor {
     private String nombre;
     private String telefono;
     private String categoriaProductos;
+    private ListaSimple<Pedido> PedidosLista;
 
 
     public Proveedor(String NombreProveedor, String TelefonoProveedor, String CategoriaProductos){
         this.nombre = NombreProveedor;
         this.telefono = TelefonoProveedor;
         this.categoriaProductos = CategoriaProductos;
-        new Pedido(this, "Recien creado");
+        registrarPedido("Recien creado");
     }
 
     public String getProveedorNombre(){return nombre;}
@@ -33,6 +33,7 @@ public class Proveedor {
 
     public void registrarPedido(String estado){
         Pedido nuevaPedido = new Pedido(this, estado);
+        PedidosLista.insertarInicio(nuevaPedido);
     }
 
 }

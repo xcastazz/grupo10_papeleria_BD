@@ -19,4 +19,17 @@ public class ItemVenta {
         System.out.println("Precio total de la venta; "+productoAVender.calcularPrecioFinal()*cantidad);
     }
 
+    public void revertirStockItemVenta(boolean Flag){
+        if (Flag) {
+                        System.out.println("Revertida la venta de; "+productoAVender.calcularPrecioFinal()*cantidad
+                                +"\n Para las unidades:"+cantidad+" Del producto: "+productoAVender.getNombre()
+                                +" Codigo: "+productoAVender.getCodigo()
+                                +"\nStock Actual vs Stock nuevo "+ productoAVender.getStock()+" / "+ productoAVender.getStock() + cantidad);
+            productoAVender.setStock(productoAVender.getStock() + cantidad);
+
+        } else {
+            System.out.println("No hay ventas para revertir");
+        }
+    }
+
 }

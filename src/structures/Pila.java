@@ -28,6 +28,7 @@ public class Pila<T>{
         Nodo<T> auxiliar = this.tope.getSiguiente();
         this.tope.setSiguiente(null);
         this.tope = auxiliar;
+        size--;
         return auxiliar;
         
     }

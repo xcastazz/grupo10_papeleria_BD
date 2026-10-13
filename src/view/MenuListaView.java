@@ -1,18 +1,17 @@
 package view;
 
 import model.domain.Producto;
-
-import java.io.Console;
-import model.domain.ItemVenta;
 import model.domain.Proveedor;
+import model.domain.Venta;
 import services.ProveedorService;
-
 import services.StockService;
+import services.VentasService;
 import utils.*;
 
 public class MenuListaView {
     private StockService stockService = new StockService();
     private ProveedorService proveedorService = new ProveedorService();
+    private VentasService ventaService = new VentasService();
 
     public void iniciar() {
         int opcion;
@@ -22,7 +21,8 @@ public class MenuListaView {
             switch (opcion) {
                 case 1 -> menuAOpciones();
                 case 2 -> menuBOpciones();
-                case 3 -> System.out.println("Saliendo del sistema...");
+                case 3 -> menuCOpciones();
+                case 4 -> System.out.println("Saliendo del sistema...");
                 default -> System.out.println("Opcion invalida.");
             }
         } while (opcion != 3);
@@ -66,6 +66,20 @@ public class MenuListaView {
         } while (opcion != 0);
     }
 
+    private void menuCOpciones(){
+        int opcion;    
+        do {
+            mostrarMenuC();
+            opcion = ConsoleUtils.leerEntero("Seleccione una opcion: ");
+            switch (opcion) {
+                case 1 -> realizarVenta();
+                case 2 -> consultarVentas();
+                case 0 -> System.out.println("Saliendo del sistema...");
+                default -> System.out.println("Opcion invalida.");
+            }
+        } while (opcion != 0);
+    }
+
 
     private void mostrarMenuPrincipal(){
         System.out.println("1. Gestionar Proveedores");
@@ -90,6 +104,12 @@ public class MenuListaView {
         System.out.println("5. Eliminar Producto por Codigo");
         System.out.println("6. Listar Productos");
         System.out.println("7. Vender producto");
+        System.out.println("0. Salir");
+    }
+
+        private void mostrarMenuC() {
+        System.out.println("1. Realizar Venta");
+        System.out.println("2. Consultar Ventas totales");
         System.out.println("0. Salir");
     }
 
@@ -270,11 +290,32 @@ public class MenuListaView {
         String nombre = ConsoleUtils.leerTexto("Nombre del producto a vender: ");
         int cantidad = ConsoleUtils.leerEntero("Cantidad del producto a vender: ");
         Producto productoAVender = stockService.buscarProductoPorNombre(nombre);
-        ItemVenta VentaNueva = new ItemVenta(productoAVender, cantidad);
-        VentaNueva.doItemVenta();
+        ventaService.realizarVenta(productoAVender, cantidad);
+        confirmarVenta();
         return productoAVender;
     }
 
+    private void confirmarVenta(){
+        int Opcion = ConsoleUtils.leerEntero("Es está venta correcta? [1] Si || [2] No");
+        Venta ventaAConfirmar = ventaService.consultarUltimaOperacion();
+        switch (Opcion) {
+            case 1:
+            if (!ventaAConfirmar.getConfirmada()) {
+                ventaAConfirmar.setConfirmada(true);
+            }
+            break;
+            case 2:
+            ventaService.rechazarVenta();
+            break;
+            default:
+                break;
+        }
+    } 
+
+    private void consultarVentas(){
+        int ventasCantidad = ventaService.registarVentas();
+        System.out.println("Actualmente hay "+ventasCantidad+ "Operaciones Realizadas");
+    }
 }
     
 

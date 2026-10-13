@@ -1,8 +1,5 @@
 package services;
 
-import model.domain.Producto;
-import model.domain.ProductoEscolar;
-import model.domain.ProductoOficina;
 import model.domain.Proveedor;
 import structures.ListaSimple;
 import structures.Nodo;
