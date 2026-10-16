@@ -24,7 +24,7 @@ public class ItemVenta {
                         System.out.println("Revertida la venta de; "+productoAVender.calcularPrecioFinal()*cantidad
                                 +"\n Para las unidades:"+cantidad+" Del producto: "+productoAVender.getNombre()
                                 +" Codigo: "+productoAVender.getCodigo()
-                                +"\nStock Actual vs Stock nuevo "+ productoAVender.getStock()+" / "+ productoAVender.getStock() + cantidad);
+                                +"\nStock Actual vs Stock nuevo "+ productoAVender.getStock()+" / "+ (productoAVender.getStock() + cantidad));
             productoAVender.setStock(productoAVender.getStock() + cantidad);
 
         } else {

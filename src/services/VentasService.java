@@ -7,9 +7,15 @@ import structures.Pila;
 public class VentasService {
     private Pila<Venta> queueVentas = new Pila<>();
 
+
+    public void continuarVenta(Producto productoAVender,int cantidadAVender){
+        Venta ventaActual = queueVentas.peek().getDato();
+        ventaActual.encargarItem(productoAVender, cantidadAVender);
+    }
+
     public void realizarVenta(Producto productoAVender,int cantidadAVender){
-        Venta ventaPrevia = queueVentas.peek().getDato();
-        if (ventaPrevia != null) {
+        if (queueVentas.peek() != null) {
+            Venta ventaPrevia = queueVentas.peek().getDato();
             ventaPrevia.setConfirmada(true);
         }
         Venta nuevaVenta = new Venta();
@@ -29,20 +35,20 @@ public class VentasService {
     }
 
     public Venta consultarUltimaOperacion(){
-        if (sinOperacionesPorDeshacer()) {
-            System.out.println("Pila Vacia");
-        }
         Venta dato = queueVentas.peek().getDato();
         return dato;
     }
 
-    private boolean sinOperacionesPorDeshacer(){
+    public boolean sinOperacionesPorDeshacer(){
         if (queueVentas.isEmpty()) {
             System.out.println("Pila Vacia");
             return true;
-        } else {
-            System.out.println("Pila con elementos");
+        } else if (queueVentas.peek().getDato().getConfirmada() == false ) {
+            System.out.println("Pila con ventas sin confirmar");
             return false;
+        } else {
+            System.out.println("Pila con ventas confirmadas ya");
+            return true;
         }
     }
 
