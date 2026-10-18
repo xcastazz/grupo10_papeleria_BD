@@ -13,6 +13,17 @@ public class VentasService {
         ventaActual.encargarItem(productoAVender, cantidadAVender);
     }
 
+    public void confirmarVenta(){
+        if (sinOperacionesPorDeshacer() == false) {
+            Venta ventaAConfirmnar = queueVentas.peek().getDato();
+            ventaAConfirmnar.setConfirmada(true);
+            System.out.println(" Venta Confirmada Correctamente \n Detalles de la Venta:");
+            consultarUltimaOperacion();
+        } else {
+            System.out.println(" Ventas Ya confirmadas Previamente");
+        }
+    }
+
     public void realizarVenta(Producto productoAVender,int cantidadAVender){
         if (queueVentas.peek() != null) {
             Venta ventaPrevia = queueVentas.peek().getDato();
@@ -25,7 +36,7 @@ public class VentasService {
 
     public boolean rechazarVenta(){
         if (sinOperacionesPorDeshacer()) {
-            System.out.println("Pila Vacia");
+            System.out.println("Error Al Intentar Rechazar La Venta");
             return false; 
         }
         Venta ventaARevertir = queueVentas.peek().getDato();
@@ -35,13 +46,20 @@ public class VentasService {
     }
 
     public Venta consultarUltimaOperacion(){
+        if (queueVentas.isEmpty()) {
+            System.out.println("Pila Vacía sin Operaciones");
+            return null;
+        } else {
         Venta dato = queueVentas.peek().getDato();
+        System.out.println("||===    Datos de la ultima operacion Realizada    ===");
+        dato.MostrarItemVenta();
         return dato;
+        }
     }
 
     public boolean sinOperacionesPorDeshacer(){
         if (queueVentas.isEmpty()) {
-            System.out.println("Pila Vacia");
+            System.out.println("Pila Vacia y sin Operaciones");
             return true;
         } else if (queueVentas.peek().getDato().getConfirmada() == false ) {
             System.out.println("Pila con ventas sin confirmar");

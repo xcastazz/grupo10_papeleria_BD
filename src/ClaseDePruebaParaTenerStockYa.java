@@ -1,16 +1,13 @@
 
 import services.StockService;
-import view.MenuListaView;
 
 
 
 public class ClaseDePruebaParaTenerStockYa {
-    private MenuListaView lista;
     private StockService stockServiceActual;
 
-    public ClaseDePruebaParaTenerStockYa() {
-        this.lista = Main.getLista();
-        this.stockServiceActual = lista.getStockService();
+    public ClaseDePruebaParaTenerStockYa(StockService servicio) {
+        this.stockServiceActual = servicio; 
     }
 
     public void productosDePrueba(){

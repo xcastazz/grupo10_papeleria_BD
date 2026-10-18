@@ -19,6 +19,15 @@ public class ItemVenta {
         System.out.println("Precio total de la venta; "+productoAVender.calcularPrecioFinal()*cantidad);
     }
 
+    public void mostrarAtributos(){
+        System.out.println("   || ================ ");
+        System.out.println("   || Nombre del Producto: "+productoAVender.getNombre());
+        System.out.println("   || Cantidad Del Producto: "+cantidad);
+        System.out.println("   || Precio Total: "+productoAVender.calcularPrecioFinal()+" ("+productoAVender.getPrecio()+" * "+cantidad+") ");
+        System.out.println("   || ================ ");
+    }
+
+
     public void revertirStockItemVenta(boolean Flag){
         if (Flag) {
                         System.out.println("Revertida la venta de; "+productoAVender.calcularPrecioFinal()*cantidad

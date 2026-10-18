@@ -1,12 +1,19 @@
 package view;
 
 import model.domain.Producto;
-import model.domain.Venta;
+import services.StockService;
 import services.VentasService;
 import utils.ConsoleUtils;
 
 public class MenuPilaView {
-        private VentasService ventaService = new VentasService();
+        private VentasService ventaService;
+        private StockService stockService;
+
+        public MenuPilaView(VentasService ventaService, StockService stockService) {
+            this.ventaService = ventaService;
+            this.stockService = stockService;
+        }
+
         public void iniciar() {
                     int opcion;
         do {
@@ -14,7 +21,11 @@ public class MenuPilaView {
             opcion = ConsoleUtils.leerEntero("Seleccione una opcion: ");
             switch (opcion) {
                 case 1 -> realizarVenta();
-                case 2 -> consultarVentas();
+                case 2 -> ventaService.consultarUltimaOperacion();
+                case 3 -> consultarVentas();
+                case 4 -> ventaService.confirmarVenta();
+                case 5 -> consultarOperacionPorConfirmar();
+                case 6 -> ventaService.rechazarVenta();
                 case 0 -> System.out.println("Saliendo del sistema...");
                 default -> System.out.println("Opcion invalida.");
             }
@@ -23,11 +34,15 @@ public class MenuPilaView {
 
             private void mostrarMenuC() {
         System.out.println("1. Realizar Venta");
-        System.out.println("2. Consultar Ventas totales");
+        System.out.println("2. Revisar la ultima Operacion");
+        System.out.println("3. Consultar Operaciones totales");
+        System.out.println("4. Confirmar la Ultima Operacion");
+        System.out.println("5. ¿Hay Operaciones Por Confirmar?");
+        System.out.println("6. Revertir Ultima Operacion");
         System.out.println("0. Salir");
     }
 
-            private Producto realizarVenta(){
+    private Producto realizarVenta(){
         String nombre = ConsoleUtils.leerTexto("Nombre del producto a vender: ");
         if (stockService.buscarProductoPorNombre(nombre) == null) {
             return null;
@@ -39,16 +54,26 @@ public class MenuPilaView {
         } else {
             ventaService.realizarVenta(productoAVender, cantidad);
         }
-        confirmarVenta();
+        continuarVenta();
         return productoAVender;
     }
 
-    private void confirmarVenta(){
-        int Opcion = ConsoleUtils.leerEntero("Venta confirmada? [1] Si || [2] Continuar Comprando || [3] No ");
-        Venta ventaAConfirmar = ventaService.consultarUltimaOperacion();
+    private void consultarOperacionPorConfirmar(){
+        boolean flag = ventaService.sinOperacionesPorDeshacer();
+        if (flag) {
+            System.out.println("No Se encuentran Ventas Recientes Por Confirmar");
+        } else {
+            System.out.println("Se Encontró una Venta Pendiente de confirmacion:");
+            ventaService.consultarUltimaOperacion();
+        }
+    }
+
+    private void continuarVenta(){
+        ventaService.consultarUltimaOperacion();
+        int Opcion = ConsoleUtils.leerEntero("Venta Concluida? [1] Si || [2] Continuar Comprando || [3] No ");
         switch (Opcion) {
             case 1:
-                ventaAConfirmar.setConfirmada(true);
+                System.out.println("Venta Concluida");
             break;
             case 2:
                 realizarVenta();
@@ -63,6 +88,6 @@ public class MenuPilaView {
 
     private void consultarVentas(){
         int ventasCantidad = ventaService.registarVentas();
-        System.out.println("Actualmente hay "+ventasCantidad+ "Operaciones Realizadas");
+        System.out.println("Actualmente hay "+ventasCantidad+" Operaciones Realizadas");
     }
 }

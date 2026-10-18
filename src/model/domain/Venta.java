@@ -1,6 +1,7 @@
 package model.domain;
 
 import structures.ListaSimple;
+import structures.Nodo;
 
 
 public class Venta {
@@ -22,9 +23,6 @@ public class Venta {
     private void agregarItem(ItemVenta item) {
         itemsEnVenta.insertarInicio(item);
     }
-    public ListaSimple<ItemVenta> getItems() {
-        return itemsEnVenta;
-    }
 
     public void revertirVenta(){
         if (!confirmada) {
@@ -38,6 +36,20 @@ public class Venta {
         System.out.println("Venta Revertida y stock revertido");
     }
 
+    public void MostrarItemVenta() {
+        Nodo<ItemVenta> actual = itemsEnVenta.getHead();
+        System.out.println("  ||===       Datos de Venta        ===");
+        System.out.println("  ||=== Venta Confirmada? "+confirmada);
+        for (int i = 0; i < itemsEnVenta.getTamano(); i++) {
+            ItemVenta productoEnVentaActual = actual.getDato();
+            System.out.println("  ||=== Indice: " + i );
+            productoEnVentaActual.mostrarAtributos();
+            System.out.println("  ||=================================");
+            actual = actual.getSiguiente();
+        }
+    }
+
+
     public Boolean getConfirmada() {
         return confirmada;
     }
@@ -45,5 +57,6 @@ public class Venta {
         System.out.println("Venta Confirmada");
         this.confirmada = confirmada;
     }
+
 
 }

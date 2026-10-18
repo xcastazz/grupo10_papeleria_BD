@@ -7,8 +7,13 @@ import services.StockService;
 import utils.*;
 
 public class MenuListaView {
-    private StockService stockService = new StockService();
-    private ProveedorService proveedorService = new ProveedorService();
+    private StockService stockService;
+    private ProveedorService proveedorService;
+
+    public MenuListaView(StockService stockService, ProveedorService proveedorService) {
+        this.stockService = stockService;
+        this.proveedorService = proveedorService;
+    }
 
     public void iniciar() {
         int opcion;
