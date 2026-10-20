@@ -19,13 +19,16 @@ public class ItemVenta {
         System.out.println("Precio total de la venta; "+productoAVender.calcularPrecioFinal()*cantidad);
     }
 
-    public void mostrarAtributos(){
-        System.out.println("   || ================ ");
-        System.out.println("   || Nombre del Producto: "+productoAVender.getNombre());
-        System.out.println("   || Cantidad Del Producto: "+cantidad);
-        System.out.println("   || Precio Total: "+productoAVender.calcularPrecioFinal()+" ("+productoAVender.getPrecio()+" * "+cantidad+") ");
-        System.out.println("   || ================ ");
-    }
+    public String mostrarAtributos() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("   || ================ \n");
+    sb.append("   || Nombre del Producto: ").append(productoAVender.getNombre()).append("\n");
+    sb.append("   || Cantidad Del Producto: ").append(cantidad).append("\n");
+    sb.append("   || Precio Total: ").append(productoAVender.calcularPrecioFinal())
+      .append(" (").append(productoAVender.getPrecio()).append(" * ").append(cantidad).append(") \n");
+    sb.append("   || ================ \n");
+    return sb.toString();
+}
 
 
     public void revertirStockItemVenta(boolean Flag){

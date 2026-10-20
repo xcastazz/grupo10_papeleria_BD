@@ -1,5 +1,6 @@
 package view;
 
+
 import services.ProveedorService;
 import services.StockService;
 import services.VentasService;
@@ -10,9 +11,10 @@ public class MenuPrincipal {
     private StockService stockService = new StockService();
     private ProveedorService proveedorService = new ProveedorService();
 
+
     private MenuListaView lista = new MenuListaView(stockService, proveedorService);
     private MenuPilaView pilas = new MenuPilaView(ventaService, stockService);
-    private MenuColaView colas = new MenuColaView();
+    private MenuColaView colas = new MenuColaView(proveedorService);
 
     public void iniciar(){
         int opcion;

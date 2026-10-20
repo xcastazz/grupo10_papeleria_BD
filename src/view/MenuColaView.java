@@ -1,14 +1,16 @@
 package view;
- 
-import model.domain.Cliente;
-import service.ClienteService;
+
+import services.ProveedorService;
 import utils.ConsoleUtils;
- 
+
 public class MenuColaView {
- 
-    public MenuColaView() {
+
+    private final ProveedorService proveedorService;
+
+    public MenuColaView(ProveedorService service) {
+        this.proveedorService = service;
     }
- 
+
     public void iniciar() {
         int opcion;
         do {
@@ -26,44 +28,54 @@ public class MenuColaView {
             }
         } while (opcion != 0);
     }
- 
+
     private void mostrarOpciones() {
         System.out.println("1. Registrar llegada (enqueue)");
         System.out.println("2. Atender al siguiente (dequeue)");
         System.out.println("3. Ver quién sigue (front)");
-        System.out.println("4. ¿Hay clientes en espera? (isEmpty)");
+        System.out.println("4. ¿Hay pedidos en espera? (isEmpty)");
         System.out.println("5. Cantidad en espera (size)");
-        System.out.println("6. Listar la fila (Parte 7)");
+        System.out.println("6. Listar la fila");
         System.out.println("0. Salir");
     }
- 
+
     private void registrarLlegada() {
-        String identificacion = ConsoleUtils.leerTexto("Identificación del cliente: ");
-        // TODO 1: llamar a clienteService.registrarLlegada y confirmar por consola
+        String telefono = ConsoleUtils.leerTexto("Teléfono del proveedor: ");
+        proveedorService.registrarLlegada(telefono); 
+        System.out.println("Pedido registrado en la fila.");
     }
- 
+
     private void atender() {
-        // TODO 2: si clienteService.sinClientesEnEspera() es true, mostrar
-        //         "No hay clientes en espera" y salir del método; si no, llamar a
-        //         atenderSiguiente y mostrar al cliente atendido
-        //         -- sin este chequeo, un dequeue sobre fila vacía lanza la excepción y cierra el programa
+        if (proveedorService.sinPedidosEnEspera()) {
+            System.out.println("No hay pedidos en espera.");
+            return;
+        }
+        var pedido = proveedorService.atenderSiguiente();
+        System.out.println("Pedido atendido: " + pedido.getProveedor().getCategoria());
     }
- 
+
     private void consultarSiguiente() {
-        // TODO 3: si no hay clientes en espera, mostrar el mismo mensaje del TODO 2;
-        //         si hay, llamar a consultarSiguiente y mostrar al cliente que sigue
+        if (proveedorService.sinPedidosEnEspera()) {
+            System.out.println("No hay pedidos en espera.");
+            return;
+        }
+        var pedido = proveedorService.consultarSiguiente();
+        System.out.println("Siguiente en la fila: " + pedido.getProveedor().getProveedorNombre());
     }
- 
+
     private void verSiHayEnEspera() {
-        // TODO 4: llamar a sinClientesEnEspera y mostrar un mensaje legible
-        //         ("No hay clientes en espera" / "Hay clientes en espera")
+        if (proveedorService.sinPedidosEnEspera()) {
+            System.out.println("No hay pedidos en espera.");
+        } else {
+            System.out.println("Hay pedidos en espera.");
+        }
     }
- 
+
     private void contar() {
-        // TODO 5: llamar a contarEnEspera y mostrar el número
+        System.out.println("Pedidos en espera: " + proveedorService.sinPedidosEnEspera());
     }
- 
+
     private void listar() {
-        // TODO 6: se completa en la Parte 7, cuando exista listarEnEspera en el Service
+        System.out.println(proveedorService.listarEnEspera());
     }
 }

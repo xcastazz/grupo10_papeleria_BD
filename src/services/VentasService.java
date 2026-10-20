@@ -25,10 +25,6 @@ public class VentasService {
     }
 
     public void realizarVenta(Producto productoAVender,int cantidadAVender){
-        if (queueVentas.peek() != null) {
-            Venta ventaPrevia = queueVentas.peek().getDato();
-            ventaPrevia.setConfirmada(true);
-        }
         Venta nuevaVenta = new Venta();
         nuevaVenta.encargarItem(productoAVender, cantidadAVender);
         queueVentas.push(nuevaVenta);
@@ -52,7 +48,8 @@ public class VentasService {
         } else {
         Venta dato = queueVentas.peek().getDato();
         System.out.println("||===    Datos de la ultima operacion Realizada    ===");
-        dato.MostrarItemVenta();
+        String texto = dato.MostrarItemVenta();
+        System.out.println(texto);
         return dato;
         }
     }
@@ -74,5 +71,33 @@ public class VentasService {
         int numeroVentas = queueVentas.getSize();
         return numeroVentas;
     }
+
+    public String listarOperaciones() {
+    if (queueVentas.isEmpty()) {
+        return "No hay operaciones por deshacer";
+    }
+
+    Pila<Venta> auxiliar = new Pila<>();
+    StringBuilder sb = new StringBuilder();
+    int contador = 0;
+
+    while (!queueVentas.isEmpty()) {
+        Venta v = queueVentas.peek().getDato();
+        queueVentas.pop();
+        sb.append(contador++).append(". ")
+          .append(v.MostrarItemVenta())
+          .append("\n");
+        auxiliar.push(v);
+    }
+
+    while (!auxiliar.isEmpty()) {
+        Venta v = auxiliar.peek().getDato();
+        auxiliar.pop();
+        queueVentas.push(v);
+    }
+
+    return sb.toString();
+}
+
 
 }

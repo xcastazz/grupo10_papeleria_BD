@@ -6,12 +6,14 @@ import services.VentasService;
 import utils.ConsoleUtils;
 
 public class MenuPilaView {
+        private boolean flag;
         private VentasService ventaService;
         private StockService stockService;
 
         public MenuPilaView(VentasService ventaService, StockService stockService) {
             this.ventaService = ventaService;
             this.stockService = stockService;
+            this.flag = false;
         }
 
         public void iniciar() {
@@ -43,13 +45,14 @@ public class MenuPilaView {
     }
 
     private Producto realizarVenta(){
+        System.out.println(flag);
         String nombre = ConsoleUtils.leerTexto("Nombre del producto a vender: ");
         if (stockService.buscarProductoPorNombre(nombre) == null) {
             return null;
         }
         int cantidad = ConsoleUtils.leerEntero("Cantidad del producto a vender: ");
         Producto productoAVender = stockService.buscarProductoPorNombre(nombre);
-        if (ventaService.sinOperacionesPorDeshacer() == false) {
+        if (flag == true) {
             ventaService.continuarVenta(productoAVender, cantidad);
         } else {
             ventaService.realizarVenta(productoAVender, cantidad);
@@ -70,16 +73,19 @@ public class MenuPilaView {
 
     private void continuarVenta(){
         ventaService.consultarUltimaOperacion();
+        flag = true;
         int Opcion = ConsoleUtils.leerEntero("Venta Concluida? [1] Si || [2] Continuar Comprando || [3] No ");
         switch (Opcion) {
             case 1:
-                System.out.println("Venta Concluida");
+            ventaService.confirmarVenta();
+            flag = false;
             break;
             case 2:
                 realizarVenta();
             break;
             case 3:
                 ventaService.rechazarVenta();
+            flag = false;
             break;
             default:
                 break;
@@ -89,5 +95,6 @@ public class MenuPilaView {
     private void consultarVentas(){
         int ventasCantidad = ventaService.registarVentas();
         System.out.println("Actualmente hay "+ventasCantidad+" Operaciones Realizadas");
+        System.out.println(ventaService.listarOperaciones());
     }
 }

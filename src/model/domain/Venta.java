@@ -36,25 +36,28 @@ public class Venta {
         System.out.println("Venta Revertida y stock revertido");
     }
 
-    public void MostrarItemVenta() {
+    public String MostrarItemVenta() {
+        StringBuilder sb = new StringBuilder();
         Nodo<ItemVenta> actual = itemsEnVenta.getHead();
-        System.out.println("  ||===       Datos de Venta        ===");
-        System.out.println("  ||=== Venta Confirmada? "+confirmada);
-        for (int i = 0; i < itemsEnVenta.getTamano(); i++) {
-            ItemVenta productoEnVentaActual = actual.getDato();
-            System.out.println("  ||=== Indice: " + i );
-            productoEnVentaActual.mostrarAtributos();
-            System.out.println("  ||=================================");
+
+    sb.append("||===       Datos de Venta        ===\n");
+    sb.append(" ||=== Venta Confirmada? ").append(confirmada).append("\n");
+    for (int i = 0; i < itemsEnVenta.getTamano(); i++) {
+            ItemVenta productoActual = actual.getDato();
+            sb.append("Indice: " + i );
+            sb.append(productoActual.mostrarAtributos());
             actual = actual.getSiguiente();
         }
-    }
+    sb.append(" ||==================================\n");
+    sb.append("||===================================\n");
+    return sb.toString();
+}
 
 
     public Boolean getConfirmada() {
         return confirmada;
     }
     public void setConfirmada(Boolean confirmada) {
-        System.out.println("Venta Confirmada");
         this.confirmada = confirmada;
     }
 

@@ -13,8 +13,15 @@ public class Proveedor {
         this.nombre = NombreProveedor;
         this.telefono = TelefonoProveedor;
         this.categoriaProductos = CategoriaProductos;
-        registrarPedido("Recien creado");
+        this.PedidosLista = new ListaSimple<>();
     }
+
+    public void imprimirInfo(){
+        System.out.println("Nombre : " + getProveedorNombre());
+        System.out.println("Telefono : " + getProveedorTelefono());
+        System.out.println("Categoria : " + getCategoria());
+    }
+
 
     public String getProveedorNombre(){return nombre;}
     public String getProveedorTelefono(){return telefono;}
@@ -34,6 +41,16 @@ public class Proveedor {
     public void registrarPedido(String estado){
         Pedido nuevaPedido = new Pedido(this, estado);
         PedidosLista.insertarInicio(nuevaPedido);
+    }
+
+    public Pedido getPedidosLista() {
+        if (!PedidosLista.estaVacia()) {
+            return PedidosLista.getHead().getDato();
+        } else {
+            System.out.println("Proveedor Sin Pedidos");
+            return null;
+        }
+        
     }
 
 }

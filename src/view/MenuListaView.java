@@ -24,10 +24,10 @@ public class MenuListaView {
                 case 1 -> menuAOpciones();
                 case 2 -> menuBOpciones();
                 //case 3 -> menuCOpciones();
-                case 4 -> System.out.println("Saliendo del sistema...");
+                case 0 -> System.out.println("Saliendo del sistema...");
                 default -> System.out.println("Opcion invalida.");
             }
-        } while (opcion != 3);
+        } while (opcion != 0);
 
     }
 
@@ -43,6 +43,7 @@ public class MenuListaView {
                 case 4 -> actualizarProveedorPorTelefono();
                 case 5 -> eliminarProveedorPorNumero();
                 case 6 -> proveedorService.recorrerListaProveedores();
+                case 7 -> ordenarPedidoProveedor();
                 case 0 -> System.out.println("Saliendo del sistema...");
                 default -> System.out.println("Opcion invalida.");
             }
@@ -71,8 +72,7 @@ public class MenuListaView {
     private void mostrarMenuPrincipal(){
         System.out.println("1. Gestionar Proveedores");
         System.out.println("2. Gestionar Productos");
-        System.out.println("3. Gestionar Ventas");
-        System.out.println("4. Gestionar Pedidos");
+        System.out.println("0. Salir");
     }
 
     private void mostrarMenuA() {
@@ -165,6 +165,14 @@ public class MenuListaView {
         } else {
             System.out.println("Producto no encontrado.");
         }
+    }
+
+    private void ordenarPedidoProveedor(){
+        System.out.println("\n");
+        proveedorService.recorrerListaProveedores();
+        System.out.println("\n");
+        String Telefono = ConsoleUtils.leerTexto("Ingrese El Telefono de el Proveedor a Realizar Pedido");
+        proveedorService.ordenarPedidoProveedor(Telefono);
     }
 
     private void mostrarMenuActualizarProducto() {
