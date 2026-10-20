@@ -28,7 +28,7 @@ public class ProductoEscolar extends Producto {
         int cantidadStock = getStock();
         if (cantidad >= 0) {
             System.out.println(cantidad+" encargados");
-            if ((cantidadStock - cantidad) > 0) {
+            if ((cantidadStock - cantidad) >= 0) {
                 double precio = calcularPrecioFinal() * cantidad;
                 super.setStock((cantidadStock - cantidad));
             } else {

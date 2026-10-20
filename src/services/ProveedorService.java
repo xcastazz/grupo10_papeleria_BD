@@ -1,14 +1,16 @@
 package services;
 
-import model.domain.Producto;
-import model.domain.ProductoEscolar;
-import model.domain.ProductoOficina;
+import model.domain.Pedido;
+import model.domain.PedidosPendientes;
 import model.domain.Proveedor;
+import structures.Cola;
 import structures.ListaSimple;
 import structures.Nodo;
 
 public class ProveedorService {
+
     private ListaSimple<Proveedor> matrizProveedor = new ListaSimple<>();
+    private final PedidosPendientes ventanillaPedidos = new PedidosPendientes("Ventanilla de Pedidos 1");
 
     public Proveedor registrarProveedor(String nombreProveedor, String telefonoProveedor, String categoriaProductos){
         Proveedor Nuevo = new Proveedor(nombreProveedor, telefonoProveedor, categoriaProductos);
@@ -16,6 +18,10 @@ public class ProveedorService {
         return Nuevo;
     }
 
+    public void ordenarPedidoProveedor(String telefono){
+        Proveedor proveedorALlamar = buscaProveedorOFallar(telefono);
+        proveedorALlamar.registrarPedido("Ordenado");
+    }
 
     public Proveedor buscarProveedorPorNombre(String Nombre) {
         Nodo<Proveedor> proveedorActual = matrizProveedor.getHead();
@@ -28,6 +34,55 @@ public class ProveedorService {
         System.out.println("Dato no encontrado");
         return null;
     }
+
+    private Proveedor buscaProveedorOFallar(String Telefono){
+        Proveedor proveedor = buscarProveedorPorTelefono(Telefono);
+        if (proveedor == null) {
+            throw new IllegalArgumentException("El Proveedor con Telefono " + Telefono + " no existe");
+        }
+        return proveedor;
+    }
+
+    
+    public void registrarLlegada(String telefono) {
+        Proveedor recienLlegado = buscaProveedorOFallar(telefono); // propaga excepción si no existe
+        Pedido pedidoRecienLlegado = recienLlegado.getPedidosLista();
+        ventanillaPedidos.getFila().enqueue(pedidoRecienLlegado);
+    }
+
+    public Pedido atenderSiguiente() {
+        // Si la cola está vacía, NoSuchElementException se propaga (no se atrapa aquí)
+        return ventanillaPedidos.getFila().dequeue();
+    }
+
+    public Pedido consultarSiguiente() {
+        return ventanillaPedidos.getFila().front();
+    }
+
+    public boolean sinPedidosEnEspera() {
+        return ventanillaPedidos.getFila().isEmpty();
+    }
+
+    public int contarEnEspera() {
+        return ventanillaPedidos.getFila().size();
+    }
+    public String listarEnEspera() {
+        Cola<Pedido> fila = ventanillaPedidos.getFila();
+        if (fila.isEmpty()) {
+            return "No hay pedidos en espera";
+        }
+        StringBuilder texto = new StringBuilder();
+        int total = fila.size();
+        for (int i = 1; i <= total; i++) {
+            Pedido pedido = fila.dequeue();
+            texto.append(i).append(". ")
+                 .append(pedido.getProveedor().getCategoria())
+                 .append("\n");
+            fila.enqueue(pedido);
+        }
+        return texto.toString();
+    }
+
 
     public Proveedor buscarProveedorPorTelefono(String Telefono) {
         Nodo<Proveedor> proveedorActual = matrizProveedor.getHead();
@@ -55,9 +110,7 @@ public class ProveedorService {
         for (int i = 0; i < matrizProveedor.getTamano(); i++) {
             Proveedor proveedorActual = actual.getDato();
             System.out.println("Indice: " + i );
-            System.out.println("Nombre : " + proveedorActual.getProveedorNombre());
-            System.out.println("Telefono : " + proveedorActual.getProveedorTelefono());
-            System.out.println("Categoria : " + proveedorActual.getCategoria());
+            proveedorActual.imprimirInfo();
             System.out.println("--------------------------------");
             actual = actual.getSiguiente();
         }
@@ -105,5 +158,6 @@ public class ProveedorService {
             return false;
         }
     }
+
 
 }
