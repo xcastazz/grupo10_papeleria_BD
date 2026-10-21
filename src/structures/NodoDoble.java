@@ -8,6 +8,7 @@ public class NodoDoble<T> {
     public NodoDoble(T dato) {
         this.dato = dato;
         this.siguiente = null;
+        this.anterior = null;
     }
 
     public T getDato() {

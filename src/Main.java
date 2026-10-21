@@ -7,6 +7,8 @@ public class Main {
         MenuPrincipal menuPrincipal = new MenuPrincipal();
         new ClaseDePruebaParaTenerStockYa(menuPrincipal.getStockService(),menuPrincipal.getProveedorService()).productosDePrueba();
         menuPrincipal.iniciar();
+
+        //consulta para el viernes como funciona el metodo eliminar en las listasdobles
     }
     
 }
