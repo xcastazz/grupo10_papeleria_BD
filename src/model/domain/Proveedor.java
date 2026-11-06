@@ -1,6 +1,6 @@
 package model.domain;
 
-import structures.ListaSimple;
+import model.structures.ListaSimple;
 
 public class Proveedor {
     private String nombre;

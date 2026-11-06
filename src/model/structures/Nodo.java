@@ -1,4 +1,4 @@
-package structures;
+package model.structures;
 
 public class Nodo<T> {
     private T dato;

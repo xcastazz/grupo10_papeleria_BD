@@ -3,8 +3,8 @@ package services;
 import model.domain.Producto;
 import model.domain.ProductoEscolar;
 import model.domain.ProductoOficina;
-import structures.ListaSimple;
-import structures.Nodo;
+import model.structures.ListaSimple;
+import model.structures.Nodo;
 
 public class StockService {
     private ListaSimple<Producto> matrizProducto = new ListaSimple<>();

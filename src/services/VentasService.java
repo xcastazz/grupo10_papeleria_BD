@@ -2,20 +2,20 @@ package services;
 
 import model.domain.Producto;
 import model.domain.Venta;
-import structures.Pila;
+import model.structures.Pila;
 
 public class VentasService {
     private Pila<Venta> queueVentas = new Pila<>();
 
 
     public void continuarVenta(Producto productoAVender,int cantidadAVender){
-        Venta ventaActual = queueVentas.peek().getDato();
+        Venta ventaActual = queueVentas.peek();
         ventaActual.encargarItem(productoAVender, cantidadAVender);
     }
 
     public void confirmarVenta(){
         if (sinOperacionesPorDeshacer() == false) {
-            Venta ventaAConfirmnar = queueVentas.peek().getDato();
+            Venta ventaAConfirmnar = queueVentas.peek();
             ventaAConfirmnar.setConfirmada(true);
             System.out.println(" Venta Confirmada Correctamente \n Detalles de la Venta:");
             consultarUltimaOperacion();
@@ -35,7 +35,7 @@ public class VentasService {
             System.out.println("Error Al Intentar Rechazar La Venta");
             return false; 
         }
-        Venta ventaARevertir = queueVentas.peek().getDato();
+        Venta ventaARevertir = queueVentas.peek();
         ventaARevertir.revertirVenta();
         queueVentas.pop();
         return true;
@@ -46,7 +46,7 @@ public class VentasService {
             System.out.println("Pila Vacía sin Operaciones");
             return null;
         } else {
-        Venta dato = queueVentas.peek().getDato();
+        Venta dato = queueVentas.peek();
         System.out.println("||===    Datos de la ultima operacion Realizada    ===");
         String texto = dato.MostrarItemVenta();
         System.out.println(texto);
@@ -58,7 +58,7 @@ public class VentasService {
         if (queueVentas.isEmpty()) {
             System.out.println("Pila Vacia y sin Operaciones");
             return true;
-        } else if (queueVentas.peek().getDato().getConfirmada() == false ) {
+        } else if (queueVentas.peek().getConfirmada() == false ) {
             System.out.println("Pila con ventas sin confirmar");
             return false;
         } else {
@@ -68,7 +68,7 @@ public class VentasService {
     }
 
     public int registarVentas(){
-        int numeroVentas = queueVentas.getSize();
+        int numeroVentas = queueVentas.size();
         return numeroVentas;
     }
 
@@ -82,7 +82,7 @@ public class VentasService {
     int contador = 0;
 
     while (!queueVentas.isEmpty()) {
-        Venta v = queueVentas.peek().getDato();
+        Venta v = queueVentas.peek();
         queueVentas.pop();
         sb.append(contador++).append(". ")
           .append(v.MostrarItemVenta())
@@ -91,7 +91,7 @@ public class VentasService {
     }
 
     while (!auxiliar.isEmpty()) {
-        Venta v = auxiliar.peek().getDato();
+        Venta v = auxiliar.peek();
         auxiliar.pop();
         queueVentas.push(v);
     }
