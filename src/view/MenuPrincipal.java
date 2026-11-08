@@ -1,6 +1,7 @@
 package view;
 
 
+import services.CatalogoService;
 import services.ProveedorService;
 import services.StockService;
 import services.VentasService;
@@ -10,12 +11,12 @@ public class MenuPrincipal {
     private VentasService ventaService = new VentasService();
     private StockService stockService = new StockService();
     private ProveedorService proveedorService = new ProveedorService();
-
+    private CatalogoService catalogoService = new CatalogoService();
 
     private MenuListaView lista = new MenuListaView(stockService, proveedorService);
     private MenuPilaView pilas = new MenuPilaView(ventaService, stockService);
     private MenuColaView colas = new MenuColaView(proveedorService);
-
+    private MenuCatalogoView catalogo = new MenuCatalogoView(catalogoService);
     public void iniciar(){
         int opcion;
         do { 
@@ -30,6 +31,9 @@ public class MenuPrincipal {
                     break;
                 case 3:
                     colas.iniciar();
+                    break;
+                case 4:
+                    catalogo.iniciar();
                     break;
                 case 0:
                     System.out.println("Saliendo del sistema...");
@@ -46,6 +50,7 @@ public class MenuPrincipal {
         System.out.println("1. Lista Simple \n(Gestion de Productos Y Proveedores)");
         System.out.println("2. Pilas (Realizar y Gestionar Ventas)");
         System.out.println("3. Colas (Gestion de Pedidos de Proveedores)");
+        System.out.println("4. Catalogo (Listas Dobles)");
         System.out.println("0. Salir Del sistema");
     }
 
