@@ -1,0 +1,6 @@
+1;1457;Lapiz;50.0;10;Bachillerato
+1;2151;Borrador;20.0;10;Primaria
+2;2585;Grapadora;580.0;10;Carpetas
+2;4857;Ganchos;250.0;10;Papeles
+1;1054;Sacapuntas;10.0;10;Primaria
+2;7844;Carpetas;4000.0;10;Organizadores

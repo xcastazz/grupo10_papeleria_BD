@@ -62,10 +62,12 @@ public class MenuListaView {
                 case 4 -> actualizarProductoPorCodigo();
                 case 5 -> eliminarProductoPorCodigo();
                 case 6 -> stockService.recorrerListaProductos();
+                case 7 -> guardarProductos();
                 case 0 -> System.out.println("Saliendo del sistema...");
                 default -> System.out.println("Opcion invalida.");
             }
         } while (opcion != 0);
+        guardarProductos();
     }
 
 
@@ -82,6 +84,7 @@ public class MenuListaView {
         System.out.println("4. Actualizar Proveedor por Telefono");
         System.out.println("5. Eliminar Proveedor por Telefono");
         System.out.println("6. Listar Proveedores");
+        System.out.println("7. Ordenar Pedido Proveedor");
         System.out.println("0. Salir");
     }
 
@@ -92,7 +95,8 @@ public class MenuListaView {
         System.out.println("4. Actualizar Producto por Codigo");
         System.out.println("5. Eliminar Producto por Codigo");
         System.out.println("6. Listar Productos");
-        System.out.println("0. Salir");
+        System.out.println("7. Guardar Productos");
+        System.out.println("0. Guardar y Salir");
     }
 
 
@@ -261,6 +265,10 @@ public class MenuListaView {
         } else {
             System.out.println("Producto no encontrado.");
         }
+    }
+
+    private void guardarProductos(){
+        stockService.persistir();
     }
 
     private void eliminarProductoPorCodigo() {

@@ -3,9 +3,9 @@ package services;
 import model.domain.Pedido;
 import model.domain.PedidosPendientes;
 import model.domain.Proveedor;
-import structures.Cola;
-import structures.ListaSimple;
-import structures.Nodo;
+import model.structures.Cola;
+import model.structures.ListaSimple;
+import model.structures.Nodo;
 
 public class ProveedorService {
 

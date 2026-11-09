@@ -1,6 +1,6 @@
 package model.domain;
 
-import structures.Cola;
+import model.structures.Cola;
 
 public class PedidosPendientes {
     private String descripcion;

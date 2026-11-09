@@ -1,7 +1,7 @@
 package model.domain;
 
-import structures.ListaSimple;
-import structures.Nodo;
+import model.structures.ListaSimple;
+import model.structures.Nodo;
 
 
 public class Venta {
