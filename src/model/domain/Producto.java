@@ -24,6 +24,17 @@ public abstract class Producto implements Vendible{
 
     }
 
+    public String show(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("--------------------------------------------").append("\n");
+        sb.append(this.getCodigo()).append("\n");
+        sb.append(this.getNombre()).append("\n");
+        sb.append(String.valueOf(this.getPrecio())).append("\n");
+        sb.append(String.valueOf(this.getStock())).append("\n");
+        sb.append("--------------------------------------------").append("\n");
+        return sb.toString();
+    }
+
     @Override 
     public abstract void vender(int cantidad);
 

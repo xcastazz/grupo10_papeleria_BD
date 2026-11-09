@@ -154,7 +154,7 @@ public class StockService {
         return "Se cargaron " + matrizProducto.getTamano() + " clientes. "; // las cuentas cuelgan de sus clientes
     }
 
-    private void persistir() {
+    public void persistir() {
         try {
             escribirProductos();
         } catch (IOException e) {

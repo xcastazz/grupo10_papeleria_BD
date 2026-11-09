@@ -15,6 +15,11 @@ public class CatalogoService {
     private final CatalogoNavegable catalogo = new CatalogoNavegable("Catálogo de productos");
     private ListaDoble<Producto> listaCatalogo = catalogo.getProductos();
 
+    public CatalogoService(){
+        cargarProductos();
+    }
+
+
     public void registrarProducto(int tipo,String codigo, String nombre, double precio, int cantidadStock, String Categoria) {
         Producto NuevoProductoCatalogo;
         
@@ -23,18 +28,16 @@ public class CatalogoService {
             case 1:
                 NuevoProductoCatalogo = registrarProductoEscolar(codigo, nombre, precio, cantidadStock, Categoria);
                 listaCatalogo.insertarAlFinal(NuevoProductoCatalogo);
-                persistir();
                 break;
             case 2:
                 NuevoProductoCatalogo = registrarProductoOficina(codigo, nombre, precio, cantidadStock, Categoria);
                 listaCatalogo.insertarAlFinal(NuevoProductoCatalogo);
-                persistir();
                 break;
             default:
                 System.out.println("Error en CatalogoService intentando registrar producto a catalogo");
                 break;
         }
-
+        persistir();
     // TODO 2: insertarlo al final de la lista
     }
 
@@ -83,6 +86,12 @@ public class CatalogoService {
 
     public Producto verProductoAnterior() {
         Producto productoAnterior = listaCatalogo.anterior();
+            System.out.println("---- Producto Anterior ----");
+            System.out.println("Código : " + productoAnterior.getCodigo());
+            System.out.println("Nombre : " + productoAnterior.getNombre());
+            System.out.println("Precio : " + productoAnterior.getPrecio());
+            System.out.println("Stock : " + productoAnterior.getStock());
+            System.out.println("---------------------------");
         // TODO 1: pedir a la lista (catalogo.getProductos()) el anterior con anterior() y devolverlo
         //         -- el cursor vive en la lista: el Service no guarda posiciones
         return productoAnterior; // reemplazar
@@ -90,6 +99,12 @@ public class CatalogoService {
 
     public Producto verProductoSiguiente() {
         Producto productoSiguiente = listaCatalogo.siguiente();
+            System.out.println("---- Producto Siguiente ----");
+            System.out.println("Código : " + productoSiguiente.getCodigo());
+            System.out.println("Nombre : " + productoSiguiente.getNombre());
+            System.out.println("Precio : " + productoSiguiente.getPrecio());
+            System.out.println("Stock : " + productoSiguiente.getStock());
+            System.out.println("---------------------------");
         // TODO 1: pedir a la lista (catalogo.getProductos()) el anterior con anterior() y devolverlo
         //         -- el cursor vive en la lista: el Service no guarda posiciones
         return productoSiguiente; // reemplazar
@@ -103,7 +118,19 @@ public class CatalogoService {
         return productoARetirar; // reemplazar
     }
 
-        public String cargarProductos() {
+    public boolean estaVacioCatalogo(){
+        return listaCatalogo.isEmpty();
+    }
+
+    public boolean hayProductoAnterior() {
+        return listaCatalogo.hayAnterior();
+    }
+
+    public boolean hayProductoSiguiente() {
+        return listaCatalogo.haySiguiente();
+    }
+    
+    public String cargarProductos() {
         File archivo = new File(ARCHIVO_CATALOGO);
 
 
@@ -133,7 +160,7 @@ public class CatalogoService {
         return "Se cargaron " + listaCatalogo.size() + " productos en el catalogo. "; // las cuentas cuelgan de sus clientes
     }
 
-    private void persistir() {
+    public void persistir() {
         try {
             escribirProductos();
         } catch (IOException e) {
